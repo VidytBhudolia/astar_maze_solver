@@ -38,4 +38,4 @@ The expected output of this project is a maze-solving algorithm that efficiently
 ### Example Output
 Below is an example of the expected output:
 
-![Example Output](eg_output.png "Example of a Solved Maze")
+![Example Output](astar_maze_solver\assets\eg_output.png "Example of a Solved Maze")
