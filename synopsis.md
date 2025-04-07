@@ -34,3 +34,8 @@ This enhanced A* algorithm combines the strengths of traditional pathfinding wit
 
 ## EXPECTED OUTPUT OF THE PROJECT
 The expected output of this project is a maze-solving algorithm that efficiently finds the shortest path in a given maze. The solution path is marked on the maze grid using a distinct value (e.g., `2`). The enhanced heuristic ensures faster and more accurate pathfinding. The project can be used in applications requiring efficient navigation, such as robotics, game development, and AI simulations.
+
+### Example Output
+Below is an example of the expected output:
+
+![Example Output](eg_output.png "Example of a Solved Maze")
