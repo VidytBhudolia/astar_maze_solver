@@ -1,4 +1,9 @@
 import random
+import colorama
+from colorama import Fore, Back, Style
+
+# Initialize colorama
+colorama.init(autoreset=True)
 
 def generate_maze(n, m):
     """Generate a maze with walls (1), paths (0)"""
@@ -27,9 +32,30 @@ def _carve_passages(maze, cx, cy):
             _carve_passages(maze, nx, ny)
 
 def print_maze(maze):
-    """Print the maze in a readable format"""
-    for row in maze:
-        print("".join(["#" if cell == 1 else " " for cell in row]))
+    """
+    Print the maze with colored formatting:
+    - White for walls
+    - Blue for path
+    - Green for start
+    - Red for end
+    """
+    start_pos = (1, 1)
+    end_pos = (len(maze)-2, len(maze[0])-2)
+    
+    for i, row in enumerate(maze):
+        line = ""
+        for j, cell in enumerate(row):
+            if (i, j) == start_pos:
+                line += Back.GREEN + '  ' + Style.RESET_ALL
+            elif (i, j) == end_pos:
+                line += Back.RED + '  ' + Style.RESET_ALL
+            elif cell == 1:
+                line += Back.WHITE + '  ' + Style.RESET_ALL
+            elif cell == 2:
+                line += Back.BLUE + '  ' + Style.RESET_ALL
+            else:
+                line += '  '
+        print(line)
 
 if __name__ == "__main__":
     # Example usage

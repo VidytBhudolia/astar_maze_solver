@@ -1,14 +1,25 @@
 # ENHANCED A* MAZE SOLVER
 
 ## DESCRIPTION
-The Enhanced A* Maze Solver is a project designed to solve mazes efficiently using an improved A* algorithm. The algorithm incorporates a KNN-based heuristic to enhance the pathfinding process. Mazes are represented as 2D grids, where the solver identifies the shortest path from a start point to an endpoint. The solution path is marked on the maze for visualization.
+The Enhanced A* Maze Solver is a project designed to solve mazes efficiently using an improved A* algorithm. The algorithm incorporates multiple heuristic functions including Manhattan distance, KNN-based, and decision tree approaches to enhance the pathfinding process. Mazes are represented as 2D grids, where the solver identifies the shortest path from a start point to an endpoint. The solution path is marked on the maze for visualization.
 
-This project demonstrates the integration of machine learning techniques with traditional pathfinding algorithms, making it suitable for solving complex mazes. The enhanced heuristic improves the algorithm's efficiency by providing better initial estimates for pathfinding.
+This project demonstrates the integration of machine learning techniques with traditional pathfinding algorithms, making it suitable for solving complex mazes. The enhanced heuristics improve the algorithm's efficiency by providing better initial estimates for pathfinding.
+
+## MAZE GENERATION
+The project includes a maze generator that creates random mazes using a depth-first search algorithm with backtracking. The generator ensures that there's always a valid path from the start point to the endpoint. The maze is represented as a 2D grid where:
+- `0` represents an open path
+- `1` represents a wall
+- `2` represents the solution path (after the A* algorithm has found it)
+
+The generated mazes provide a challenging environment for testing different heuristic functions in the A* algorithm.
 
 ## ALGORITHM TO BE USED
 The project uses an enhanced version of the A* algorithm, which is a popular pathfinding and graph traversal algorithm. The key steps of the algorithm are as follows:
 
-1. **Pre-training the Heuristic**: The heuristic function is pre-trained using the `train_heuristic` function. This step ensures that the heuristic provides optimal initial estimates for the shortest path, leveraging a KNN-based approach.
+1. **Pre-training the Heuristic**: Multiple heuristic functions are available:
+   - Manhattan distance: Traditional distance calculation
+   - KNN-based heuristic: Leverages K-Nearest Neighbors approach for better path estimation
+   - Decision tree heuristic: Uses decision trees for pathfinding decisions
 
 2. **Initialization**:
    - The maze is represented as a 2D grid, where `0` indicates open paths, and `1` indicates walls.
@@ -30,7 +41,24 @@ The project uses an enhanced version of the A* algorithm, which is a popular pat
 5. **No Path Found**:
    - If the open list is exhausted and the endpoint is not reached, the algorithm returns the maze with no solution path.
 
-This enhanced A* algorithm combines the strengths of traditional pathfinding with machine learning techniques to improve efficiency and accuracy.
+## HEURISTIC COMPARISON
+The project features a comprehensive heuristic comparison functionality that:
+
+1. Solves the same maze using different heuristic functions
+2. Measures and compares execution time for each heuristic
+3. Identifies the fastest heuristic for pathfinding
+4. Visualizes the performance comparison using matplotlib
+5. Saves the visualization as an image file for future reference
+
+This comparison helps identify which heuristic performs best under different maze configurations and sizes.
 
 ## EXPECTED OUTPUT OF THE PROJECT
-The expected output of this project is a maze-solving algorithm that efficiently finds the shortest path in a given maze. The solution path is marked on the maze grid using a distinct value (e.g., `2`). The enhanced heuristic ensures faster and more accurate pathfinding. The project can be used in applications requiring efficient navigation, such as robotics, game development, and AI simulations.
+The expected output of this project is:
+
+1. A maze-solving algorithm that efficiently finds the shortest path in a given maze
+2. Visual representation of the solution path marked on the maze grid
+3. Performance metrics of different heuristic functions
+4. Bar chart visualization comparing execution times of different heuristics
+5. Identification of the most efficient heuristic for the given maze
+
+The enhanced heuristic ensures faster and more accurate pathfinding. The project can be used in applications requiring efficient navigation, such as robotics, game development, and AI simulations.

@@ -1,5 +1,7 @@
 import time
-from generate_maze import generate_maze
+import matplotlib.pyplot as plt
+import numpy as np
+from maze_generator import generate_maze, print_maze
 from astar_algorithm import astar_solve
 
 def main():
@@ -13,90 +15,76 @@ def main():
     start = [1, 1]
     end = [m-2, n-2]
     
-    print("Solving maze with A* algorithm ...")
-    # Solve maze with A*
-    start_time = time.time()
-    solved_maze = astar_solve(maze, start, end)
-    elapsed_time = time.time() - start_time
-    
-    # Print results
-    print("Execution time: %s seconds" % elapsed_time)
-    print_maze(solved_maze)
+    # Compare different heuristics
+    compare_heuristics(maze, start, end)
 
-def print_maze(maze):
-    # ANSI color codes
-    RESET = "\033[0m"
-    WALL = "\033[47m  " + RESET      # White background
-    PATH = "\033[0m  "               # Default/transparent background
-    SOLUTION = "\033[44m  " + RESET  # Blue background
-    START = "\033[42;1m  " + RESET   # Green background
-    END = "\033[41;1m  " + RESET     # Red background
+def compare_heuristics(maze, start, end):
+    """
+    Compare different heuristic functions for A* algorithm
     
-    # Find start and end points (typically [1,1] and [len(maze)-2, len(maze[0])-2])
-    start = [1, 1]
-    end = [len(maze)-2, len(maze[0])-2]
+    Args:
+        maze: The maze grid
+        start: Starting position [x, y]
+        end: Goal position [x, y]
+    """
+    heuristic_types = ['manhattan', 'knn', 'decision_tree']
+    results = {}
     
-    # Check if terminal supports ANSI colors
-    try:
-        # Create fancy border with double-line characters
-        border_top = "╔" + "══" * len(maze[0]) + "╗"
-        border_bottom = "╚" + "══" * len(maze[0]) + "╝"
+    print("\nComparing different heuristic functions:")
+    print("----------------------------------------")
+    
+    for heuristic_type in heuristic_types:
+        print(f"\nSolving maze with A* algorithm using {heuristic_type} heuristic...")
         
-        print("\n" + border_top)
+        # Solve the maze with the specified heuristic
+        solved_maze, execution_time = astar_solve(maze, start, end, heuristic_type)
         
-        for i, row in enumerate(maze):
-            print("║", end="")
-            for j, cell in enumerate(row):
-                if [i, j] == start:
-                    print(START, end="")
-                elif [i, j] == end:
-                    print(END, end="")
-                elif cell == 1:
-                    print(WALL, end="")
-                elif cell == 2:
-                    print(SOLUTION, end="")
-                else:
-                    print(PATH, end="")
-            print("║")
-            
-        print(border_bottom + "\n")
+        # Store result
+        results[heuristic_type] = {
+            'time': execution_time,
+            'solved_maze': solved_maze
+        }
         
-        # Add legend
-        print(" Legend:")
-        print(" " + START + " Start point")
-        print(" " + END + " End point")
-        print(" " + SOLUTION + " Solution path")
-        print(" " + PATH + " Open path (unvisited)")
-        print(" " + WALL + " Wall\n")
+        # Print result
+        print(f"Execution time with {heuristic_type}: {execution_time:.6f} seconds")
         
-    except:
-        # Fallback if terminal doesn't support ANSI colors
-        print("\n+" + "-" * (len(maze[0]) * 2) + "+")
-        
-        for i, row in enumerate(maze):
-            print("|", end="")
-            for j, cell in enumerate(row):
-                if [i, j] == start:
-                    print("SS", end="")
-                elif [i, j] == end:
-                    print("EE", end="")
-                elif cell == 1:
-                    print("░░", end="")  # Light shade for walls
-                elif cell == 2:
-                    print("··", end="")  # Dots for solution path
-                else:
-                    print("  ", end="")  # Empty for open paths
-            print("|")
-            
-        print("+" + "-" * (len(maze[0]) * 2) + "+\n")
-        
-        # Add legend for non-ANSI terminals
-        print(" Legend:")
-        print(" SS - Start point")
-        print(" EE - End point")
-        print(" ·· - Solution path")
-        print(" ░░ - Wall")
-        print("    - Open path (unvisited)\n")
+    # Identify the fastest heuristic
+    fastest = min(results.items(), key=lambda x: x[1]['time'])
+    print(f"\nFastest heuristic: {fastest[0]} ({fastest[1]['time']:.6f} seconds)")
+    
+    # Print the solution from the fastest heuristic
+    print("\nSolution using the fastest heuristic:")
+    print_maze(fastest[1]['solved_maze'])
+    
+    # Plot comparison
+    plot_comparison(results)
+
+def plot_comparison(results):
+    """
+    Plot the execution time comparison between different heuristics
+    
+    Args:
+        results: Dictionary with heuristic results
+    """
+    heuristics = list(results.keys())
+    times = [results[h]['time'] for h in heuristics]
+    
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(heuristics, times, color=['blue', 'green', 'red'])
+    
+    # Add labels and title
+    plt.xlabel('Heuristic Function')
+    plt.ylabel('Execution Time (seconds)')
+    plt.title('A* Algorithm: Execution Time by Heuristic Function')
+    
+    # Add the time values on top of the bars
+    for bar, time_val in zip(bars, times):
+        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.001,
+                f'{time_val:.4f}s', ha='center', va='bottom')
+    
+    plt.tight_layout()
+    plt.savefig('heuristic_comparison.png')
+    plt.show()
 
 if __name__ == "__main__":
     main()

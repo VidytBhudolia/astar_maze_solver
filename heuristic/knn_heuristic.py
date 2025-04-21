@@ -1,5 +1,6 @@
 import numpy as np
 from collections import deque
+from .manhattan_heuristic import manhattan_distance
 
 class KNNHeuristic:
     """
@@ -77,13 +78,9 @@ class KNNHeuristic:
 # Initialize a global instance for use across the application
 knn_heuristic = KNNHeuristic()
 
-def manhattan_distance(a, b):
-    """Calculate Manhattan distance between two points"""
-    return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
 def get_optimal_heuristic(position, goal, maze=None):
     """
-    Get the best heuristic estimate by combining traditional methods with KNN
+    Get the best heuristic estimate using KNN
     
     Args:
         position: Current position [x, y]

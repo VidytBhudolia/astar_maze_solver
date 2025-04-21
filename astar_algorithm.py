@@ -1,12 +1,35 @@
 import heapq
-from enhanced_heuristic import get_optimal_heuristic, train_heuristic
-# def astar_solve(maze, start, end):
-def astar_solve(maze, start, end):
+import time
+from heuristic.manhattan_heuristic import manhattan_distance
+from heuristic.knn_heuristic import get_optimal_heuristic, train_heuristic
+from heuristic.decision_tree_heuristic import dt_heuristic, setup_decision_tree
+
+def astar_solve(maze, start, end, heuristic_type='knn'):
     """algorithm for maze solving
-    Enhanced A* algorithm for maze solving with KNN-based heuristic(using 2s)
+    Enhanced A* algorithm for maze solving with different heuristic functions
+    
+    Args:
+        maze: 2D grid representing the maze (0=path, 1=wall)
+        start: Starting position [x, y]
+        end: Goal position [x, y]
+        heuristic_type: Type of heuristic to use ('manhattan', 'knn', 'decision_tree')
+        
+    Returns:
+        tuple: (solved_maze, execution_time)
     """
-    # Pre-train the heuristic for better initial estimates
-    train_heuristic(maze, start, end)
+    start_time = time.time()
+    
+    # Set up the appropriate heuristic function
+    if heuristic_type == 'knn':
+        # Pre-train the KNN heuristic for better initial estimates
+        train_heuristic(maze, start, end)
+        heuristic_func = lambda pos, goal, m: get_optimal_heuristic(pos, goal, m)
+    elif heuristic_type == 'decision_tree':
+        # Set up the decision tree model
+        setup_decision_tree(maze, start, end)
+        heuristic_func = lambda pos, goal, m: dt_heuristic(pos, goal, m)
+    else:  # Default to manhattan distance
+        heuristic_func = lambda pos, goal, m: manhattan_distance(pos, goal)
     
     # Define directions (up, right, down, left)
     directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
@@ -17,7 +40,7 @@ def astar_solve(maze, start, end):
     # Initialize the open list (priority queue)
     open_list = []
     # Format: (f_score, g_score, position)
-    initial_h = get_optimal_heuristic(start, end, maze)
+    initial_h = heuristic_func(start, end, maze)
     heapq.heappush(open_list, (initial_h, 0, start))
     
     # Initialize closed set and parent dictionary
@@ -54,8 +77,11 @@ def astar_solve(maze, start, end):
             # Mark path on maze copy (with 2s)
             for x, y in path:
                 maze_copy[x][y] = 2
-                
-            return maze_copy
+            
+            end_time = time.time()
+            execution_time = end_time - start_time
+            
+            return maze_copy, execution_time
             
         # Check neighbors
         for dx, dy in directions:
@@ -72,8 +98,8 @@ def astar_solve(maze, start, end):
                 # Calculate scores
                 tentative_g = g_score + 1
                 
-                # Use our enhanced heuristic
-                h_score = get_optimal_heuristic(neighbor, end, maze)
+                # Use the selected heuristic
+                h_score = heuristic_func(neighbor, end, maze)
                 f_score = tentative_g + h_score
                 
                 # Add to open list
@@ -84,4 +110,6 @@ def astar_solve(maze, start, end):
                     parent[neighbor_tuple] = current
     
     # No path found
-    return maze_copy
+    end_time = time.time()
+    execution_time = end_time - start_time
+    return maze_copy, execution_time
