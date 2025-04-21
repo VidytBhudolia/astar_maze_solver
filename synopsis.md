@@ -41,6 +41,41 @@ The project uses an enhanced version of the A* algorithm, which is a popular pat
 5. **No Path Found**:
    - If the open list is exhausted and the endpoint is not reached, the algorithm returns the maze with no solution path.
 
+## HEURISTIC FUNCTIONS IN DETAIL
+The success and efficiency of the A* algorithm heavily depend on the chosen heuristic function. This project implements and compares three different heuristic approaches:
+
+### 1. Manhattan Distance Heuristic
+- **Definition**: The Manhattan distance (also known as taxicab or city block distance) is calculated as the sum of the absolute differences between the coordinates of two points.
+- **Formula**: h(n) = |x₁ - x₂| + |y₁ - y₂|, where (x₁, y₁) is the current position and (x₂, y₂) is the goal position.
+- **Properties**: This heuristic is admissible (never overestimates the distance) and consistent (satisfies the triangle inequality), ensuring optimal solutions.
+- **Advantages**: Simple to compute, efficient, and works well for grid-based environments where movement is restricted to four directions.
+- **Limitations**: Does not account for obstacles or maze structure; only considers raw distance.
+- **Example**: If current position is (3, 4) and goal is at (7, 9), Manhattan distance = |7 - 3| + |9 - 4| = 4 + 5 = 9.
+
+### 2. KNN-Based Heuristic
+- **Definition**: This heuristic leverages the K-Nearest Neighbors algorithm to estimate distances based on patterns observed from previously solved similar maze configurations.
+- **Implementation**:
+  1. For training, the algorithm collects data points consisting of (state, actual_distance_to_goal) pairs from previously solved mazes.
+  2. For inference, given a new state, it identifies K most similar states from the training data.
+  3. The heuristic estimate is calculated as the weighted average of the actual distances from the K nearest neighbors.
+- **Properties**: This heuristic is learning-based and can potentially provide more accurate estimates than pure geometric approaches.
+- **Advantages**: Can capture maze-specific patterns, potentially more accurate when trained on similar mazes, adapts to the structure of the problem.
+- **Limitations**: Requires training data, may not generalize well to dramatically different maze structures, computationally more expensive than simpler heuristics.
+- **Example**: If similar positions in past mazes required 12, 14, and 11 steps to reach the goal, the KNN heuristic might estimate around 12.3 steps for a new similar position.
+
+### 3. Decision Tree Heuristic
+- **Definition**: This heuristic uses a decision tree model to predict the distance to the goal based on various features of the current state.
+- **Implementation**:
+  1. Features are extracted from the maze state, such as local wall patterns, distance metrics, and relative position features.
+  2. The decision tree model, trained on prior maze-solving experiences, predicts the estimated distance to the goal.
+  3. The prediction is used as the heuristic value in the A* algorithm.
+- **Properties**: Can capture complex non-linear relationships between maze features and actual distances.
+- **Advantages**: Can identify complex patterns that simple distance metrics miss, takes into account the structure of the maze, can learn from experience.
+- **Limitations**: Requires significant training data for accuracy, may overfit to specific maze types, more complex to implement and tune.
+- **Example**: The decision tree might learn that when there's a wall to the right and an open path ahead with the goal in the northeast direction, an optimal estimate is typically 15% longer than the Manhattan distance.
+
+Each heuristic has its strengths and weaknesses, and their performance can vary significantly depending on the specific characteristics of the maze. The comparative analysis implemented in this project helps identify which heuristic performs best under different conditions.
+
 ## HEURISTIC COMPARISON
 The project features a comprehensive heuristic comparison functionality that:
 
