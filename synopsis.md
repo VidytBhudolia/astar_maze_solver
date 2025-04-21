@@ -47,10 +47,26 @@ The project features a comprehensive heuristic comparison functionality that:
 1. Solves the same maze using different heuristic functions
 2. Measures and compares execution time for each heuristic
 3. Identifies the fastest heuristic for pathfinding
-4. Visualizes the performance comparison using matplotlib
-5. Saves the visualization as an image file for future reference
+4. Visualizes the performance comparison using:
+   - Interactive charts in the web interface
+   - Matplotlib for data analysis and reporting
+5. Displays the solution path for each heuristic
+6. Saves visualization as image files for future reference
 
 This comparison helps identify which heuristic performs best under different maze configurations and sizes.
+
+## WEB INTERFACE
+The project includes a web-based interface that allows users to:
+
+1. Generate mazes of different sizes
+2. Visualize the generated maze with clear start and end points
+3. Solve the maze using multiple heuristic functions
+4. Compare the performance of different heuristics
+5. View the solution path for each heuristic
+6. See visualization of time comparisons through interactive charts
+7. Highlight the fastest solution path for quick identification
+
+The interface provides an intuitive way to interact with the maze solver and visualize results.
 
 ## EXPECTED OUTPUT OF THE PROJECT
 The expected output of this project is:
@@ -60,5 +76,21 @@ The expected output of this project is:
 3. Performance metrics of different heuristic functions
 4. Bar chart visualization comparing execution times of different heuristics
 5. Identification of the most efficient heuristic for the given maze
+6. Interactive web interface for user engagement and result visualization
+7. Exportable visualization reports for documentation purposes
 
 The enhanced heuristic ensures faster and more accurate pathfinding. The project can be used in applications requiring efficient navigation, such as robotics, game development, and AI simulations.
+
+## TECHNICAL IMPLEMENTATION
+The project is implemented using:
+
+1. Backend: Python with Flask for API endpoints
+2. Frontend: HTML, CSS, and JavaScript for the web interface
+3. Visualization: 
+   - Chart.js for interactive performance comparison charts
+   - Matplotlib for advanced data visualization and export
+4. Algorithm: Custom implementation of A* with enhanced heuristics
+5. Machine Learning: Implementation of KNN and Decision Tree heuristics
+6. Data Processing: NumPy and Pandas for efficient data handling
+
+The modular architecture allows for easy extension to include additional heuristic functions or maze generation algorithms.
