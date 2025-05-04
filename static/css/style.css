@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.controls {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.maze-display {
+    flex: 2;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.results {
+    margin-top: 20px;
+    display: none;
+}
+
+.result-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.result-card {
+    background-color: #f9f9f9;
+    border-left: 4px solid;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-card.manhattan {
+    border-color: #FF6384;
+}
+
+.result-card.KNN {
+    border-color: #36A2EB;
+}
+
+.result-card.decision_tree {
+    border-color: #FFCE56;
+}
+
+.result-card-info {
+    flex-grow: 1;
+}
+
+.chart-container {
+    margin-top: 20px;
+    height: 250px;
+}
+
+.maze-container {
+    display: grid;
+    margin-top: 20px;
+    gap: 0px; /* Changed from 1px to remove white space between cells */
+}
+
+.maze-cell {
+    width: 15px;
+    height: 15px;
+}
+
+.wall {
+    background-color: #333;
+}
+
+.path {
+    background-color: #fff;
+}
+
+.start {
+    background-color: #4CAF50;
+}
+
+.end {
+    background-color: #F44336;
+}
+
+.solution {
+    background-color: #2196F3;
+}
+
+.fastest {
+    background-color: #f0f8ff;
+    border-width: 5px !important;
+}

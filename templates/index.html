@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* Maze Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <h1>A* Maze Solver</h1>
+            <div class="control-group">
+                <label for="maze-size">Maze Size: <span id="size-value">15</span></label>
+                <input type="range" id="maze-size" min="5" max="51" step="2" value="15">
+                <p class="note">Note: Only odd-sized mazes are valid for generation</p>
+            </div>
+            <button id="generate-btn">Generate Maze</button>
+            <button id="solve-btn" disabled>Solve Maze</button>
+            
+            <div class="results" id="results-container">
+                <h2>Heuristic Comparison</h2>
+                <div class="result-cards" id="result-cards"></div>
+                <div class="chart-container">
+                    <canvas id="comparison-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="maze-display">
+            <h2>Maze Visualization</h2>
+            <div class="maze-container" id="maze-container"></div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
